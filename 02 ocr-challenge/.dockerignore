@@ -1,0 +1,11 @@
+# Git metadata
+.git/
+
+# Python cache and environments
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Generated output files
+app/output/
