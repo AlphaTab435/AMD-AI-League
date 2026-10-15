@@ -8,7 +8,12 @@ The application uses Qwen2.5-VL-3B-Instruct, a vision-language model, to recogni
 
 ## Demo
 
-**Video demonstration:** [Add video link here]
+**Video demonstration:**
+
+
+https://github.com/user-attachments/assets/8dd42872-8bbf-4565-905e-6a9983bb8d0e
+
+
 
 ## Sample Results
 
