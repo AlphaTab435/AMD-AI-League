@@ -10,7 +10,7 @@ You can also refer to `app/output/` to view the generated output or testing resu
 
 **Video demonstration:**
 
-[Add demo video link here]
+https://github.com/user-attachments/assets/bcd6ab1d-2d0f-4a24-bd48-8e78bad0bcf6
 
 ## What this project does
 
