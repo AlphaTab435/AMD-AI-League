@@ -1,0 +1,18 @@
+# AI
+transformers
+sentence-transformers
+
+#vector db
+chromadb
+
+# pdf
+PyMuPDF
+
+# docx
+python-docx
+
+# excel and csv
+pandas
+tabulate
+openpyxl
+xlrd
