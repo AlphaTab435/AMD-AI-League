@@ -2,9 +2,9 @@
 
 Challenge Details: Refer to the [AMD AI League – Match 3 Challenge Brief](./AMD%20AI%20League%20%E2%80%93%20Match%203%20Challenge%20Brief%20-%20Copy.pdf)
 
-You can also refer to `app/output/` to view the generated output or testing results.
+This project implements a Retrieval-Augmented Generation (RAG) application for the [AMD AI League](https://lablab.ai/ai-hackathons/amd-lablab-ai-academy-challenge) challenge. It scans a corpus of mixed content types, indexes the data with an embedding model, and answers questions using a local Qwen-based pipeline. The application is designed for AMD ROCm-based GPU inference and is packaged for Docker-based deployment.
 
-This project implements a Retrieval-Augmented Generation (RAG) application for the AMD AI League challenge. It scans a corpus of mixed content types, indexes the data with an embedding model, and answers questions using a local Qwen-based pipeline. The application is designed for AMD ROCm-based GPU inference and is packaged for Docker-based deployment.
+You can also refer to `app/output/` to view the generated output or testing results.
 
 ## Demo
 
