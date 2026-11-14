@@ -45,6 +45,9 @@ jobs:
           docker --version
           docker info
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
@@ -120,20 +123,52 @@ jobs:
               -u "${{ github.actor }}" \
               --password-stdin
 
-      - name: Build RAG image
+      - name: Check Storage Before Build
         run: |
-          docker build \
+          echo "=== Disk ==="
+          df -h /
+
+          echo "=== Inodes ==="
+          df -i /
+
+          echo "=== Model Sizes ==="
+          du -sh "03 Retrieval-Augmented-Generation/models/"*
+
+          echo "=== Containerd Usage ==="
+          sudo du -sh /var/lib/containerd
+
+          echo "=== Docker Usage ==="
+          docker system df -v
+
+      - name: Build and Push RAG image
+        run: |
+          docker buildx build \
             --platform linux/amd64 \
             -f "03 Retrieval-Augmented-Generation/Dockerfile" \
             -t ghcr.io/${IMAGE_OWNER}/amd-rag:${{ inputs.tag }} \
+            --push \
             "03 Retrieval-Augmented-Generation"
 
-      - name: Push RAG image
+      - name: Check Storage After Build
+        if: always()
         run: |
-          docker push \
-            ghcr.io/${IMAGE_OWNER}/amd-rag:${{ inputs.tag }}
+          echo "=== Disk ==="
+          df -h /
+
+          echo "=== Inodes ==="
+          df -i /
+
+          echo "=== Containerd Usage ==="
+          sudo du -sh /var/lib/containerd
+
+          echo "=== Containerd Snapshots ==="
+          sudo du -sh /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs 2>/dev/null || true
+
+          echo "=== Docker Usage ==="
+          docker system df -v
 
       - name: Show published image
+        if: success()
         run: |
           echo "Published:"
           echo "ghcr.io/${IMAGE_OWNER}/amd-rag:${{ inputs.tag }}"
