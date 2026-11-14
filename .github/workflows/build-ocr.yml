@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Docker image tag"
+        description: "Image tag"
         required: true
         default: "v1"
 
@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set lowercase image owner
+        run: echo "IMAGE_OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
 
       - name: Show runner disk space
         run: df -h /
@@ -68,15 +71,15 @@ jobs:
         run: |
           docker build \
             --platform linux/amd64 \
-            -t ghcr.io/${{ github.repository_owner }}/amd-ocr:${{ inputs.tag }} \
+            -t ghcr.io/${IMAGE_OWNER}/amd-ocr:${{ inputs.tag }} \
             .
 
       - name: Push OCR image
         run: |
           docker push \
-            ghcr.io/${{ github.repository_owner }}/amd-ocr:${{ inputs.tag }}
+            ghcr.io/${IMAGE_OWNER}/amd-ocr:${{ inputs.tag }}
 
       - name: Show published image
         run: |
           echo "Published:"
-          echo "ghcr.io/${{ github.repository_owner }}/amd-ocr:${{ inputs.tag }}"
+          echo "ghcr.io/${IMAGE_OWNER}/amd-ocr:${{ inputs.tag }}"
