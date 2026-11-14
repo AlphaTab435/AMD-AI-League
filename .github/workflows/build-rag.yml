@@ -24,7 +24,21 @@ jobs:
         run: echo "IMAGE_OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
 
       - name: Show runner disk space
-        run: df -h /
+        run: |
+          echo "=== Disk space ==="
+          df -h
+
+          echo "=== Inode usage ==="
+          df -i
+
+          echo "=== Docker disk usage ==="
+          docker system df -v
+
+          echo "=== Docker root directory ==="
+          docker info | grep -i "Docker Root Dir"
+
+          echo "=== Docker and containerd storage ==="
+          sudo du -sh /var/lib/docker /var/lib/containerd 2>/dev/null || true
 
       - name: Verify Docker
         run: |
@@ -81,6 +95,23 @@ jobs:
           test -n "$(find "03 Retrieval-Augmented-Generation/models/qwen3-embedding-0.6b" -name '*.safetensors' -type f -print -quit)"
 
           echo "Qwen3-Embedding-0.6B verification passed."
+
+      - name: Check downloaded model sizes
+        run: |
+          echo "=== Downloaded model sizes ==="
+          du -sh "03 Retrieval-Augmented-Generation/models/"*
+
+          echo "=== Disk space after downloads ==="
+          df -h /
+
+          echo "=== Inodes after downloads ==="
+          df -i /
+
+          echo "=== Docker storage ==="
+          docker system df -v
+
+          echo "=== Storage directories ==="
+          sudo du -sh /var/lib/docker /var/lib/containerd 2>/dev/null || true
 
       - name: Log in to GHCR
         run: |

@@ -1,9 +1,24 @@
+
 name: Check Runner Disk Space
-on: workflow_dispatch
+
+on:
+  workflow_dispatch:
 
 jobs:
   check-space:
     runs-on: ubuntu-latest
+
     steps:
       - name: Show Disk Usage
-        run: df -h /
+        run: |
+          echo "=== Filesystem ==="
+          df -h /
+
+          echo "=== Inodes ==="
+          df -i /
+
+          echo "=== Block Devices ==="
+          lsblk
+
+          echo "=== Runner Information ==="
+          uname -a
