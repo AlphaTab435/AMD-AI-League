@@ -22,3 +22,36 @@ jobs:
 
           echo "=== Runner Information ==="
           uname -a
+
+          echo "=== Docker Version ==="
+          docker --version
+
+          echo "=== Docker Information ==="
+          docker info
+
+          echo "=== Docker Disk Usage ==="
+          docker system df -v
+
+          echo "=== Docker Root Directory ==="
+          docker info --format '{{.DockerRootDir}}'
+
+          echo "=== Docker Storage Driver ==="
+          docker info --format '{{.Driver}}'
+
+          echo "=== Docker Storage Filesystem ==="
+          sudo df -hT /var/lib/docker
+          sudo df -i /var/lib/docker
+
+          echo "=== Containerd Storage Filesystem ==="
+          sudo df -hT /var/lib/containerd
+          sudo df -i /var/lib/containerd
+
+          echo "=== Docker and Containerd Directory Sizes ==="
+          sudo du -sh /var/lib/docker /var/lib/containerd 2>/dev/null || true
+
+          echo "=== Storage Mount Information ==="
+          findmnt -T /var/lib/docker
+          findmnt -T /var/lib/containerd
+
+          echo "=== Disk Usage by Top-Level Directory ==="
+          sudo du -xhd1 /var 2>/dev/null | sort -h
