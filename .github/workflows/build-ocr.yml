@@ -71,8 +71,9 @@ jobs:
         run: |
           docker build \
             --platform linux/amd64 \
+            -f "02 ocr-challenge/Dockerfile" \
             -t ghcr.io/${IMAGE_OWNER}/amd-ocr:${{ inputs.tag }} \
-            .
+            "02 ocr-challenge"
 
       - name: Push OCR image
         run: |

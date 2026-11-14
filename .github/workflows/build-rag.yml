@@ -89,8 +89,9 @@ jobs:
         run: |
           docker build \
             --platform linux/amd64 \
+            -f "03 Retrieval-Augmented-Generation/Dockerfile" \
             -t ghcr.io/${IMAGE_OWNER}/amd-rag:${{ inputs.tag }} \
-            .
+             "03 Retrieval-Augmented-Generation"
 
       - name: Push RAG image
         run: |
