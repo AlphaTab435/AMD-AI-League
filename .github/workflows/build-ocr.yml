@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set lowercase image owner
         run: echo "IMAGE_OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
@@ -32,7 +32,7 @@ jobs:
           docker info
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -42,21 +42,22 @@ jobs:
 
       - name: Download Qwen2.5-VL-3B-Instruct
         run: |
-          mkdir -p models/qwen2.5-vl-3b
+          mkdir -p "02 ocr-challenge/models/qwen2.5-vl-3b"
 
           python -c "
           from huggingface_hub import snapshot_download
 
           snapshot_download(
               repo_id='Qwen/Qwen2.5-VL-3B-Instruct',
-              local_dir='models/qwen2.5-vl-3b'
+              local_dir='02 ocr-challenge/models/qwen2.5-vl-3b'
           )
           "
 
       - name: Verify model files
         run: |
-          test -f models/qwen2.5-vl-3b/config.json
-          test -n "$(find models/qwen2.5-vl-3b -name '*.safetensors' -type f -print -quit)"
+          test -f "02 ocr-challenge/models/qwen2.5-vl-3b/config.json"
+
+          test -n "$(find "02 ocr-challenge/models/qwen2.5-vl-3b" -name '*.safetensors' -type f -print -quit)"
 
           echo "Model verification passed."
 
